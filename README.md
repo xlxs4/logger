@@ -10,14 +10,14 @@ It is lite enough to be used in a microcontroller.
 The following log levels are supported:
 | Level | Description |
 | ----- | ----------- |
-| trace | TODO |
-| debug | TODO |
-| info | TODO |
-| notice | TODO |
-| warning | TODO |
-| error | TODO |
-| emergency | TODO |
-| disabled | TODO |
+| trace | Very detailed information, useful for tracking the individual steps of an operation |
+| debug | General debugging information |
+| info | Noteworthy or periodical events |
+| notice | Uncommon but expected events |
+| warning | Unexpected events that do not compromise the operability of a function |
+| error | Unexpected failure of an operation |
+| emergency | Unexpected failure that renders the entire system unusable |
+| disabled | Use this log level to disable logging entirely. No message should be logged as disabled. Must be enforced by the user |
 
 Changing the log levels and their order is very simple.
 In [`Logger.hpp`](), change the `#define`s for the levels, e.g.:
@@ -36,14 +36,14 @@ In [`Logger.hpp`](), change the `#define`s for the levels, e.g.:
 and the `enum` for the order:
 ```cpp
 enum LogLevel : LogLevelType {
-		trace = 32, ///< Very detailed information, useful for tracking the individual steps of an operation
-		debug = 64, ///< General debugging information
-		info = 96, ///< Noteworthy or periodical events
-		notice = 128, ///< Uncommon but expected events
-		warning = 160, ///< Unexpected events that do not compromise the operability of a function
-		error = 192, ///< Unexpected failure of an operation
-		emergency = 254, ///< Unexpected failure that renders the entire system unusable
-		disabled = 255, ///< Use this log level to disable logging entirely. No message should be logged as disabled.
+		trace = 32,
+		debug = 64,
+		info = 96,
+		notice = 128,
+		warning = 160,
+		error = 192,
+		emergency = 254,
+		disabled = 255,
 	};
 ```
 
