@@ -4,8 +4,9 @@ This is a small, self-contained C++ logger with minimal overhead.
 
 It allows logging messages with different severities, and allows the user of the services to choose which severity they want displayed.
 This is a niche alternative to [Google (`glog`)](), [`spdlog`](), [`plog`]() and [`Boost::Log`]().
-It is also compatible with [ETL]()'s `etl::string`.
+It is also compatible with [ETL]()'s `etl::string`. Assuming `etl::string<SIZE> text = "Hello"`, you can use `text.data()` or `text.c_str()`.
 It is lite enough to be used in a microcontroller.
+It is used for all logging purposes in the [AcubeSAT nanosatellite project](https://acubesat.spacedot.gr/) (and aboard it, with some modifications).
 
 The following log levels are supported:
 | Level | Description |
