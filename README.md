@@ -36,15 +36,15 @@ In [`Logger.hpp`](), change the `#define`s for the levels, e.g.:
 and the `enum` for the order:
 ```cpp
 enum LogLevel : LogLevelType {
-		trace = 32,
-		debug = 64,
-		info = 96,
-		notice = 128,
-		warning = 160,
-		error = 192,
-		emergency = 254,
-		disabled = 255,
-	};
+	trace = 32,
+	debug = 64,
+	info = 96,
+	notice = 128,
+	warning = 160,
+	error = 192,
+	emergency = 254,
+	disabled = 255,
+};
 ```
 
 The logger uses `#define`s that allow logging through `operator<<`:
