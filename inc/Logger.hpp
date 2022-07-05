@@ -6,21 +6,21 @@
 #include "Logger_Definitions.hpp"
 
 #if defined LOGLEVEL_TRACE
-#define LOGLEVEL Logger::trace // Ignore-MISRA
+#define LOGLEVEL Logger::trace
 #elif defined LOGLEVEL_DEBUG
-#define LOGLEVEL Logger::debug // Ignore-MISRA
+#define LOGLEVEL Logger::debug
 #elif defined LOGLEVEL_INFO
-#define LOGLEVEL Logger::info // Ignore-MISRA
+#define LOGLEVEL Logger::info
 #elif defined LOGLEVEL_NOTICE
-#define LOGLEVEL Logger::notice // Ignore-MISRA
+#define LOGLEVEL Logger::notice
 #elif defined LOGLEVEL_WARNING
-#define LOGLEVEL Logger::warning // Ignore-MISRA
+#define LOGLEVEL Logger::warning
 #elif defined LOGLEVEL_ERROR
-#define LOGLEVEL Logger::error // Ignore-MISRA
+#define LOGLEVEL Logger::error
 #elif defined LOGLEVEL_EMERGENCY
-#define LOGLEVEL Logger::emergency // Ignore-MISRA
+#define LOGLEVEL Logger::emergency
 #elif !defined LOGLEVEL
-#define LOGLEVEL Logger::disabled // Ignore-MISRA
+#define LOGLEVEL Logger::disabled
 #endif
 
 #define LOG_TRACE     (LOG<Logger::trace>())     ///< @see LOG @relates Logger
@@ -58,6 +58,7 @@ public:
 	/**
 	 * Log levels supported by the logger. Each level represents a different severity of the logged Message,
 	 * and messages of lower severities can be filtered on top of more significant ones.
+	 * The number values are arbitrary, only the relative order counts.
 	 *
 	 * Each severity is tied to a number. The higher the number, the higher the severity.
 	 */
@@ -69,7 +70,7 @@ public:
 		warning = 160, ///< Unexpected events that do not compromise the operability of a function
 		error = 192, ///< Unexpected failure of an operation
 		emergency = 254, ///< Unexpected failure that renders the entire system unusable
-		disabled = 255, ///< Use this log level to disable logging entirely. No message should be logged as disabled.
+		disabled = 255, ///< Use this log level to disable logging entirely. No message should be logged as disabled. Must be enforced by the user
 	};
 
 	/**
@@ -83,6 +84,7 @@ public:
 	 * A class that defines a log message.
 	 *
 	 * Instead of using this class, prefer one of the above macros.
+	 * This is internal to the \ref Logger class.
 	 * @see LOG
 	 * @internal
 	 */
@@ -110,7 +112,7 @@ public:
 		 *
 		 * @tparam T The type of value to append
 		 * @param value The new value to add
-         * @todo See if noexcept can be added here without triggering warnings
+         * @todo See if noexcept can be added here without triggering warnings (string.append might throw)
 		 * @return The current Logger::LogEntry where the value has been appended
 		 */
 		template <class T>
