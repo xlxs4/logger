@@ -97,3 +97,5 @@ LOG_DEBUG << "The temperature is: " << getTemperature();
 ```
 
 Here, if `getTemperature()` will cause a side effect (e.g. a `std::cout` print), it will still be executed, even if the debug message will not be printed to the screen due to an insufficient `LOGLEVEL`. You should prefer to use functions that return plain values as parts of the log function, so that they might be optimzied away at compile time.
+
+For type casts, [`etl::to_string`](https://www.etlcpp.com/to_string.html) and co are your friends. Or, you can just implement the corresponding operators for other types.
