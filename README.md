@@ -21,7 +21,8 @@ It is used for all logging purposes in the [AcubeSAT nanosatellite project](http
 	- [Usage](#usage)
 	- [Features](#features)
 	- [Log Levels](#log-levels)
-		- [Caveats](#caveats)
+	- [Caveats](#caveats)
+	- [Building](#building)
 
 </details>
 
@@ -89,7 +90,7 @@ enum LogLevel : LogLevelType {
 };
 ```
 
-### Caveats
+## Caveats
 
 For messages that will not be logged, any calls to functions that contain side effects will still take place:
 ```cpp
@@ -99,3 +100,19 @@ LOG_DEBUG << "The temperature is: " << getTemperature();
 Here, if `getTemperature()` will cause a side effect (e.g. a `std::cout` print), it will still be executed, even if the debug message will not be printed to the screen due to an insufficient `LOGLEVEL`. You should prefer to use functions that return plain values as parts of the log function, so that they might be optimzied away at compile time.
 
 For type casts, [`etl::to_string`](https://www.etlcpp.com/to_string.html) and co are your friends. Or, you can just implement the corresponding operators for other types.
+
+## Building
+
+If you use this as a standalone, you'll need [ETL](https://github.com/ETLCPP/etl).
+You can add it with [conan](https://conan.io/), or as a submodule, etc.
+To add ETL through conan, there's already a `conanfile.txt` in the root directory. You can:
+
+- `mkdir build && cd build`
+- `conan install ..`
+
+1. You might need to run `conan profile new default --detect` and `conan profile update settings.compiler.libcxx=libstdc++11 default`, to generate default profile detecting GCC, set old ABI and set `libcxx` to the C++11 ABI, respectively. This is done to [manage the GCC >= 5 ABI](https://docs.conan.io/en/latest/howtos/manage_gcc_abi.html#manage-gcc-abi)
+2. After you've run `conan install`, a `conanbuildinfo.cmake` file will have been generated. You can then edit the `CMakeLists.txt` to add the lines `include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)` and `conan_basic_setup()`
+
+![conan install example output](assets/conan-install.png)
+
+![logger building](assets/build.png)
