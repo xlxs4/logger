@@ -3,10 +3,20 @@ project(Logger)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories("${PROJECT_SOURCE_DIR}/inc" "${PROJECT_SOURCE_DIR}/lib/etl/include")
-# Change the executable's name. It should match the project's name.
-add_executable(Logger
-        src/main.cpp
-        src/Logger.cpp
-        src/Platform/x86/Logger.cpp
-        )
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
+add_library(log_common STATIC)
+target_include_directories(log_common PUBLIC "inc/")
+target_sources(log_common PRIVATE "src/Logger.cpp")
+target_compile_features(log_common PRIVATE "cxx_std_17")
+
+add_library(log_x86 STATIC)
+target_sources(log_x86 PRIVATE "src/Platform/x86/Logger.cpp")
+target_link_libraries(log_x86 PRIVATE "log_common")
+
+add_library(Logger::x86 ALIAS "log_x86")
+
+add_executable(Logger)
+target_sources(Logger PRIVATE src/main.cpp)
+target_link_libraries(Logger PRIVATE "log_x86")
